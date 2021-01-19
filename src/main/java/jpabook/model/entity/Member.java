@@ -6,6 +6,9 @@ import java.util.List;
 
 @Entity
 public class Member {
+    /*
+    회원은 상품을 주문할 수 있다.
+     */
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -16,6 +19,9 @@ public class Member {
     private String city;
     private String street;
     private String zipcode;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<Order>();
 
     //Getter, Setter
     public Long getId() {
@@ -56,5 +62,13 @@ public class Member {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }
