@@ -1,17 +1,22 @@
-package jpabook.model.entity;
+package jpabook.model.entity.item;
+
+import jpabook.model.entity.Category;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Item {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  //상속 관계 매핑
+@DiscriminatorColumn(name = "DTYPE")  // DTYPE 컬럼으로 자식 클래스를 구분
+public abstract class Item {    //직접 생성해서 사용하지 않으므로 추상 클래스로
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
 
     private String name;        //이름
-    private int price;          //가격
+    private int price;             //가격
     private int stockQuantity;  //재고수량
 
     @ManyToMany(mappedBy = "items")
