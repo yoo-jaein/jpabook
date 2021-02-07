@@ -8,25 +8,22 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS")
 public class Order {
-    /*
-    주문 시 여러 종류의 상품을 선택할 수 있다.
-     */
 
     @Id
     @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
-    private Member member;      //주문 회원
+    private Member member;  //주문 회원
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<OrderItem>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "DELIVERY_ID")
-    private Delivery delivery; //배송정보
+    private Delivery delivery;   //배송정보
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;     //주문시간
