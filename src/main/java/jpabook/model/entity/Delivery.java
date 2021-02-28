@@ -12,12 +12,25 @@ public class Delivery {
     @OneToOne(mappedBy = "delivery")
     private Order order;
 
+    /* 값 타입으로 대체
     private String city;
     private String street;
     private String zipcode;
+    */
+
+    @Embedded
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    public Delivery() {
+    }
+
+    public Delivery(Address address) {
+        this.address = address;
+        this.status = DeliveryStatus.READY;
+    }
 
     //Getter, Setter
     public Long getId() {
@@ -36,28 +49,12 @@ public class Delivery {
         this.order = order;
     }
 
-    public String getCity() {
-        return city;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public DeliveryStatus getStatus() {
@@ -66,5 +63,14 @@ public class Delivery {
 
     public void setStatus(DeliveryStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Delevery{" +
+                "id=" + id +
+                ", address=" + address +
+                ", status=" + status +
+                '}';
     }
 }
